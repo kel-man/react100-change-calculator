@@ -39,15 +39,14 @@ class App extends Component {
     let difference = (paid - due)*100;
     this.setState({
       twenties: Math.floor(difference/2000),
-      tens: Math.floor((difference % 2000)/1000),
-      fives: Math.floor((difference %1000)/500),
+      tens: Math.floor((difference%2000)/1000),
+      fives: Math.floor((difference%1000)/500),
       ones: Math.floor((difference%500)/100),
-      quarters : Math.floor((difference % 100) / 25),
-      dimes : Math.floor((difference % 25) / 10),
+      quarters : Math.floor((difference%100)/25),
+      dimes : Math.floor((difference%25)/10),
       nickels: Math.floor((difference%10)/5),
-      pennies : Math.ceil((difference % 5) / 1)
+      pennies : Math.ceil((difference%5)/1)
     })
-    console.log(this.state);
   }
 
   handleDue(e) {
