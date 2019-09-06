@@ -37,18 +37,29 @@ class App extends Component {
     var paid = this.state.paid;
     var due = this.state.due;
     var difference = ((paid - due)*100).toFixed(2);
+    let twenties = Math.floor(difference/2000);
+    let tens = Math.floor(difference%2000/1000);
+    let fives = Math.floor(difference%1000/500);
+    let ones = Math.floor(difference%500/100);
+    let quarters = Math.floor(difference%100/25);
+    let dimes = Math.floor(difference%25/10);
+    let nickels = Math.floor((difference-(twenties*2000)-(tens*1000)-(fives*500)-(ones*100)-(quarters*25)-(dimes*10))/5);
+    let pennies = Math.ceil(difference%5/1);
+
     this.setState({
-      twenties: Math.floor(difference/2000),
-      tens: Math.floor((difference%2000)/1000),
-      fives: Math.floor((difference%1000)/500),
-      ones: Math.floor((difference%500)/100),
-      quarters : Math.floor((difference%100)/25),
-      dimes : Math.floor((difference%25)/10),
-      pennies : Math.ceil((difference%5)/1)
+      twenties: twenties,
+      tens: tens,
+      fives: fives,
+      ones: ones,
+      quarters : quarters,
+      dimes : dimes,
+      nickels: nickels,
+      pennies : pennies
     })
-    this.setState({
-      nickels: Math.floor((difference-(this.state.twenties*2000)-(this.state.tens*1000)-(this.state.fives*500)-(this.state.ones*100)-(this.state.quarters*25)-(this.state.dimes*10))/5),
-    })
+    // this.setState({
+    // })
+    console.log(this.state);
+
   }
   handleDue(e) {
     this.setState({
@@ -67,36 +78,36 @@ class App extends Component {
       <div>
         <h1 style={{color:'white', padding:'20px'}}>Change Calculator</h1>
         <hr style={{borderTop:'3px solid white'}}/>
-      <div style={{display:'flex', justifyContent:'space-around'}}>
-        <div className='card bg-light mb-3' style={{width:'30%'}}>
-          <div className='card-header'>Enter information</div>
-          <form onSubmit={this.handleSubmit} className='card-body'>
-            <div className='form-group'>
-              <label>How much is due?</label>
-              <input name='amountDue' type='number' className='due form-control' value={this.state.due} onChange={this.handleDue} placeholder='Balance due: '/>
-            </div>
-            <div className='form-group'>
-              <label>How much was received?</label>
-              <input name='amountReceived' type='number' className='paid form-control' value={this.state.paid} onChange={this.handlePaid} placeholder='Amount tendered: '/>
-            </div>
-              <button type='submit' className='btn btn-primary' style={{width:'100%'}}>Calculate</button>
-          </form>
-        </div>
-
-        <div className='card' style={{width:'60%'}}>
-          <div className='card-header' style={{textAlign:'center', color:'green'}}>The total change due is ${(this.state.paid-this.state.due).toFixed(2)}</div>
-          <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'space-around', alignContent:'space-around', height:'100%'}}>
-            <ChangeCard title='Twenties' amount={this.state.twenties}/>
-            <ChangeCard title='Tens ' amount={this.state.tens}/>
-            <ChangeCard title='Fives ' amount={this.state.fives}/>
-            <ChangeCard title='Ones' amount={this.state.ones}/>
-            <ChangeCard title='Quarters' amount={this.state.quarters}/>
-            <ChangeCard title='Dimes' amount={this.state.dimes}/>
-            <ChangeCard title='Nickels' amount={this.state.nickels}/>
-            <ChangeCard title='Pennies' amount={this.state.pennies}/>
+        <div style={{display:'flex', justifyContent:'space-around'}}>
+          <div className='card bg-light mb-3' style={{width:'30%'}}>
+            <div className='card-header'>Enter information</div>
+              <form onSubmit={this.handleSubmit} className='card-body'>
+                <div className='form-group'>
+                  <label>How much is due?</label>
+                  <input name='amountDue' type='number' className='due form-control' value={this.state.due} onChange={this.handleDue} placeholder='Balance due: '/>
+                </div>
+                <div className='form-group'>
+                  <label>How much was received?</label>
+                  <input name='amountReceived' type='number' className='paid form-control' value={this.state.paid} onChange={this.handlePaid} placeholder='Amount tendered: '/>
+                </div>
+                  <button type='submit' className='btn btn-primary' style={{width:'100%'}}>Calculate</button>
+              </form>
           </div>
+
+          <div className='card' style={{width:'60%'}}>
+            <div className='card-header' name='changeDue' style={{textAlign:'center', color:'green'}}>The total change due is ${(this.state.paid-this.state.due).toFixed(2)}</div>
+              <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'space-around', alignContent:'space-around', height:'100%'}}>
+                <ChangeCard title='Twenties' amount={this.state.twenties}/>
+                <ChangeCard title='Tens ' amount={this.state.tens}/>
+                <ChangeCard title='Fives ' amount={this.state.fives}/>
+                <ChangeCard title='Ones' amount={this.state.ones}/>
+                <ChangeCard title='Quarters' amount={this.state.quarters}/>
+                <ChangeCard title='Dimes' amount={this.state.dimes}/>
+                <ChangeCard title='Nickels' amount={this.state.nickels}/>
+                <ChangeCard title='Pennies' amount={this.state.pennies}/>
+              </div>
+            </div>
         </div>
-      </div>
       </div>
     )
   }
