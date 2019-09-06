@@ -16,6 +16,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      change: "",
       paid: "",
       due: "",
       twenties: "",
@@ -44,9 +45,10 @@ class App extends Component {
     let quarters = Math.floor(difference%100/25);
     let dimes = Math.floor(difference%25/10);
     let nickels = Math.floor((difference-(twenties*2000)-(tens*1000)-(fives*500)-(ones*100)-(quarters*25)-(dimes*10))/5);
-    let pennies = Math.ceil(difference%5/1);
+    // let pennies = Math.ceil(difference%5/1);
 
     this.setState({
+      change: (paid-due).toFixed(2),
       twenties: twenties,
       tens: tens,
       fives: fives,
@@ -54,12 +56,8 @@ class App extends Component {
       quarters : quarters,
       dimes : dimes,
       nickels: nickels,
-      pennies : pennies
+      pennies : Math.ceil(difference%5/1)
     })
-    // this.setState({
-    // })
-    console.log(this.state);
-
   }
   handleDue(e) {
     this.setState({
@@ -95,16 +93,16 @@ class App extends Component {
           </div>
 
           <div className='card' style={{width:'60%'}}>
-            <div className='card-header' name='changeDue' style={{textAlign:'center', color:'green'}}>The total change due is ${(this.state.paid-this.state.due).toFixed(2)}</div>
+            <div className='card-header' name='changeDue totalChange' style={{textAlign:'center', color:'green'}}>The total change due is ${(this.state.change)}</div>
               <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'space-around', alignContent:'space-around', height:'100%'}}>
-                <ChangeCard title='Twenties' amount={this.state.twenties}/>
-                <ChangeCard title='Tens ' amount={this.state.tens}/>
-                <ChangeCard title='Fives ' amount={this.state.fives}/>
-                <ChangeCard title='Ones' amount={this.state.ones}/>
-                <ChangeCard title='Quarters' amount={this.state.quarters}/>
-                <ChangeCard title='Dimes' amount={this.state.dimes}/>
-                <ChangeCard title='Nickels' amount={this.state.nickels}/>
-                <ChangeCard title='Pennies' amount={this.state.pennies}/>
+                <ChangeCard name='Twenties' title='Twenties' amount={this.state.twenties}/>
+                <ChangeCard name='Tens' title='Tens ' amount={this.state.tens}/>
+                <ChangeCard name='Fives' title='Fives ' amount={this.state.fives}/>
+                <ChangeCard name='Ones' title='Ones' amount={this.state.ones}/>
+                <ChangeCard name='Quarters' title='Quarters' amount={this.state.quarters}/>
+                <ChangeCard name='Dimes' title='Dimes' amount={this.state.dimes}/>
+                <ChangeCard name='Nickels' title='Nickels' amount={this.state.nickels}/>
+                <ChangeCard name='Pennies' title='Pennies' amount={this.state.pennies}/>
               </div>
             </div>
         </div>
