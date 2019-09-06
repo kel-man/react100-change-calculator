@@ -5,7 +5,7 @@ class ChangeCard extends Component {
       <div className='card' style={{backgroundColor: '#f5f5f5', width: '22%', textAlign:'center', minHeight:'7em'}}>
         <div className='card-body'>
           <h4 className='card-title'>{this.props.title}</h4>
-          <p className='card-text'>{this.props.amount}</p>
+          <p className='card-text' name={this.props.title}>{this.props.amount}</p>
         </div>
       </div>
     )
@@ -34,9 +34,9 @@ class App extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let paid = this.state.paid;
-    let due = this.state.due;
-    let difference = (paid - due)*100;
+    var paid = this.state.paid;
+    var due = this.state.due;
+    var difference = ((paid - due)*100).toFixed(2);
     this.setState({
       twenties: Math.floor(difference/2000),
       tens: Math.floor((difference%2000)/1000),
@@ -44,11 +44,12 @@ class App extends Component {
       ones: Math.floor((difference%500)/100),
       quarters : Math.floor((difference%100)/25),
       dimes : Math.floor((difference%25)/10),
-      nickels: Math.floor((difference%10)/5),
       pennies : Math.ceil((difference%5)/1)
     })
+    this.setState({
+      nickels: Math.floor((difference-(this.state.twenties*2000)-(this.state.tens*1000)-(this.state.fives*500)-(this.state.ones*100)-(this.state.quarters*25)-(this.state.dimes*10))/5),
+    })
   }
-
   handleDue(e) {
     this.setState({
       due : e.target.value
@@ -72,18 +73,18 @@ class App extends Component {
           <form onSubmit={this.handleSubmit} className='card-body'>
             <div className='form-group'>
               <label>How much is due?</label>
-              <input type='number' className='due form-control' value={this.state.due} onChange={this.handleDue} placeholder='Balance due: '/>
+              <input name='amountDue' type='number' className='due form-control' value={this.state.due} onChange={this.handleDue} placeholder='Balance due: '/>
             </div>
             <div className='form-group'>
               <label>How much was received?</label>
-              <input type='number' className='paid form-control' value={this.state.paid} onChange={this.handlePaid} placeholder='Amount tendered: '/>
+              <input name='amountReceived' type='number' className='paid form-control' value={this.state.paid} onChange={this.handlePaid} placeholder='Amount tendered: '/>
             </div>
               <button type='submit' className='btn btn-primary' style={{width:'100%'}}>Calculate</button>
           </form>
         </div>
 
         <div className='card' style={{width:'60%'}}>
-          <div className='card-header' style={{textAlign:'center', color:'green'}}>The total change due is ${this.state.paid-this.state.due}</div>
+          <div className='card-header' style={{textAlign:'center', color:'green'}}>The total change due is ${(this.state.paid-this.state.due).toFixed(2)}</div>
           <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'space-around', alignContent:'space-around', height:'100%'}}>
             <ChangeCard title='Twenties' amount={this.state.twenties}/>
             <ChangeCard title='Tens ' amount={this.state.tens}/>
