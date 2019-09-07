@@ -6,7 +6,7 @@ class ChangeCard extends Component {
       <div className='card' style={{backgroundColor: '#f5f5f5', width: '22%', textAlign:'center', minHeight:'7em'}}>
         <div className='card-body'>
           <h4 className='card-title'>{this.props.title}</h4>
-          <p className='card-text' name={this.props.title}>{this.props.amount}</p>
+          <p className='card-text' className={this.props.title} name={this.props.title}>{this.props.amount}</p>
         </div>
       </div>
     )
@@ -17,7 +17,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      twenties: "",
+      twenties: '',
       tens: "",
       fives: "",
       ones: "",
@@ -112,7 +112,7 @@ class App extends Component {
               <h4 className='alert-heading'>{(this.state.message)}${(this.state.change)}</h4>
             </div>
             <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'space-around', alignContent:'space-around', height:'100%'}}>
-              <ChangeCard name='Twenties' title='Twenties' amount={this.state.twenties}/>
+              <ChangeCard name='Twenties' title='twenties' amount={this.state.twenties}/>
               <ChangeCard name='Tens' title='Tens ' amount={this.state.tens}/>
               <ChangeCard name='Fives' title='Fives ' amount={this.state.fives}/>
               <ChangeCard name='Ones' title='Ones' amount={this.state.ones}/>
