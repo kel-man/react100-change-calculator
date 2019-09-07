@@ -1,38 +1,5 @@
 import React, { Component } from 'react';
 
-//  class AlertTag extends Component {
-//    constructor(props) {
-//      super(props);
-//      this.state={
-//        change: "",
-//        paid: "",
-//        due: ""
-//      }
-//      this.handleDue = this.handleDue.bind(this);
-//      this.handlePaid = this.handlePaid.bind(this);
-//      this.handleSubmit = this.handleSubmit.bind(this);
-//    }
-
-//   render(){
-//     // switch(this.state.change){
-//       if (this.state.change >= 0){
-//         console.log('Functions');
-//         return(
-//           <div className='success card' style={{backgroundColor: 'green'}}>
-//             <p>Total change due: </p>
-//           </div>
-//         )
-//       }
-//       else  {
-//         return( 
-//           <div className='danger card' style={{backgroundColor: 'red'}}>
-//             <p>Additional money owed.</p>
-//           </div>
-//         )
-//       }
-//     }
-//   }
-
 class ChangeCard extends Component {
   render() {
     return(
@@ -62,7 +29,6 @@ class App extends Component {
       change: "",
       paid: "",
       due: "",
-      color: '',
       alert: ''
     }
     this.handleDue = this.handleDue.bind(this);
@@ -96,22 +62,18 @@ class App extends Component {
     })
     if (difference > 0){
       this.setState({
-        color: 'green',
         message: 'The total change due is ',
         alert: 'alert alert-success'
       })
     }
     else {
       this.setState({
-        color:'red',
         message: 'Additional money owed.',
         alert: 'alert alert-danger'
       })
     }
-
-    // if (paid-due) > 0 {this.setState({success: 'Success!'})} 
-    // {this.setState({danger: 'Not enough cash!'})}
   }
+
   handleDue(e) {
     this.setState({
       due : e.target.value
@@ -145,14 +107,8 @@ class App extends Component {
               </form>
           </div>
           
-          <div className='success'>
-            {/*success tag goes here */}
-            <p>{this.state.success}</p>
-          </div>
-
           <div className='card' style={{width:'60%'}}>
-            {/* <Successful name='alert'/> */}
-            <div className='card-header alert' name='changeDue totalChange alert' className={(this.state.alert)} style={{textAlign:'center', color:'black'}}>
+            <div className='card-header' name='changeDue totalChange alert' className={(this.state.alert)} style={{textAlign:'center', color:'black'}}>
               <h4 className='alert-heading'>{(this.state.message)}${(this.state.change)}</h4>
             </div>
             <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'space-around', alignContent:'space-around', height:'100%'}}>
@@ -167,12 +123,6 @@ class App extends Component {
             </div>
           </div>
         </div>
-        <div className='alert alert-danger' role='alert'>
-        <h4 className='alert-heading'>Well done!</h4>'
-        You successfully read this important alert message.
-        </div>
-            {/* <AlertTag name='alert card' title='alert card'/> */}
-        {/* <div className='alert card' style={{color: {this.state.color}}} */}
       </div>
   )}
 }
