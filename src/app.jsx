@@ -1,4 +1,38 @@
 import React, { Component } from 'react';
+
+//  class AlertTag extends Component {
+//    constructor(props) {
+//      super(props);
+//      this.state={
+//        change: "",
+//        paid: "",
+//        due: ""
+//      }
+//      this.handleDue = this.handleDue.bind(this);
+//      this.handlePaid = this.handlePaid.bind(this);
+//      this.handleSubmit = this.handleSubmit.bind(this);
+//    }
+
+//   render(){
+//     // switch(this.state.change){
+//       if (this.state.change >= 0){
+//         console.log('Functions');
+//         return(
+//           <div className='success card' style={{backgroundColor: 'green'}}>
+//             <p>Total change due: </p>
+//           </div>
+//         )
+//       }
+//       else  {
+//         return( 
+//           <div className='danger card' style={{backgroundColor: 'red'}}>
+//             <p>Additional money owed.</p>
+//           </div>
+//         )
+//       }
+//     }
+//   }
+
 class ChangeCard extends Component {
   render() {
     return(
@@ -16,9 +50,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      change: "",
-      paid: "",
-      due: "",
       twenties: "",
       tens: "",
       fives: "",
@@ -26,7 +57,13 @@ class App extends Component {
       quarters: "",
       dimes: "",
       nickels: "",
-      pennies: ""
+      pennies: "",
+      message: "",
+      change: "",
+      paid: "",
+      due: "",
+      color: '',
+      alert: ''
     }
     this.handleDue = this.handleDue.bind(this);
     this.handlePaid = this.handlePaid.bind(this);
@@ -45,7 +82,6 @@ class App extends Component {
     let quarters = Math.floor(difference%100/25);
     let dimes = Math.floor(difference%25/10);
     let nickels = Math.floor((difference-(twenties*2000)-(tens*1000)-(fives*500)-(ones*100)-(quarters*25)-(dimes*10))/5);
-    // let pennies = Math.ceil(difference%5/1);
 
     this.setState({
       change: (paid-due).toFixed(2),
@@ -58,6 +94,23 @@ class App extends Component {
       nickels: nickels,
       pennies : Math.ceil(difference%5/1)
     })
+    if (difference > 0){
+      this.setState({
+        color: 'green',
+        message: 'The total change due is ',
+        alert: 'alert alert-success'
+      })
+    }
+    else {
+      this.setState({
+        color:'red',
+        message: 'Additional money owed.',
+        alert: 'alert alert-danger'
+      })
+    }
+
+    // if (paid-due) > 0 {this.setState({success: 'Success!'})} 
+    // {this.setState({danger: 'Not enough cash!'})}
   }
   handleDue(e) {
     this.setState({
@@ -91,24 +144,37 @@ class App extends Component {
                   <button type='submit' className='btn btn-primary' style={{width:'100%'}}>Calculate</button>
               </form>
           </div>
+          
+          <div className='success'>
+            {/*success tag goes here */}
+            <p>{this.state.success}</p>
+          </div>
 
           <div className='card' style={{width:'60%'}}>
-            <div className='card-header' name='changeDue totalChange' style={{textAlign:'center', color:'green'}}>The total change due is ${(this.state.change)}</div>
-              <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'space-around', alignContent:'space-around', height:'100%'}}>
-                <ChangeCard name='Twenties' title='Twenties' amount={this.state.twenties}/>
-                <ChangeCard name='Tens' title='Tens ' amount={this.state.tens}/>
-                <ChangeCard name='Fives' title='Fives ' amount={this.state.fives}/>
-                <ChangeCard name='Ones' title='Ones' amount={this.state.ones}/>
-                <ChangeCard name='Quarters' title='Quarters' amount={this.state.quarters}/>
-                <ChangeCard name='Dimes' title='Dimes' amount={this.state.dimes}/>
-                <ChangeCard name='Nickels' title='Nickels' amount={this.state.nickels}/>
-                <ChangeCard name='Pennies' title='Pennies' amount={this.state.pennies}/>
-              </div>
+            {/* <Successful name='alert'/> */}
+            <div className='card-header alert' name='changeDue totalChange alert' className={(this.state.alert)} style={{textAlign:'center', color:'black'}}>
+              <h4 className='alert-heading'>{(this.state.message)}${(this.state.change)}</h4>
             </div>
+            <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'space-around', alignContent:'space-around', height:'100%'}}>
+              <ChangeCard name='Twenties' title='Twenties' amount={this.state.twenties}/>
+              <ChangeCard name='Tens' title='Tens ' amount={this.state.tens}/>
+              <ChangeCard name='Fives' title='Fives ' amount={this.state.fives}/>
+              <ChangeCard name='Ones' title='Ones' amount={this.state.ones}/>
+              <ChangeCard name='Quarters' title='Quarters' amount={this.state.quarters}/>
+              <ChangeCard name='Dimes' title='Dimes' amount={this.state.dimes}/>
+              <ChangeCard name='Nickels' title='Nickels' amount={this.state.nickels}/>
+              <ChangeCard name='Pennies' title='Pennies' amount={this.state.pennies}/>
+            </div>
+          </div>
         </div>
+        <div className='alert alert-danger' role='alert'>
+        <h4 className='alert-heading'>Well done!</h4>'
+        You successfully read this important alert message.
+        </div>
+            {/* <AlertTag name='alert card' title='alert card'/> */}
+        {/* <div className='alert card' style={{color: {this.state.color}}} */}
       </div>
-    )
-  }
+  )}
 }
 
 export default App;
