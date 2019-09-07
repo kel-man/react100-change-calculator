@@ -12,7 +12,7 @@ class ChangeCard extends Component {
     )
   }
 }
-
+//github is giving me difficulties so here is a comment
 class App extends Component {
   constructor(props) {
     super(props);
