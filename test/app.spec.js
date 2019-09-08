@@ -90,7 +90,6 @@ describe('express', function() {
       const promises = Object
         .keys(expected)
         .map((key, i) => expect(results[i]).to.equal(expected[key], `Expected ${expected[key]} ${key}, saw ${results[i]} instead.`));
-
       return Promise.all(promises);
     })
   );

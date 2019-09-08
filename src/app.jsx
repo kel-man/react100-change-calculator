@@ -3,16 +3,15 @@ import React, { Component } from 'react';
 class ChangeCard extends Component {
   render() {
     return(
-      <div className='card' style={{backgroundColor: '#f5f5f5', width: '22%', textAlign:'center', minHeight:'7em'}}>
+      <div className='card well' style={{backgroundColor: '#f5f5f5', width: '22%', textAlign:'center', minHeight:'7em'}}>
         <div className='card-body'>
-          <h4 className='card-title'>{this.props.title}</h4>
-          <p className='card-text' className={this.props.title} name={this.props.title}>{this.props.amount}</p>
+          <h4 className='card-title '>{this.props.title}</h4>
+          <p className='card-text change' /*className={this.props.title}*/ name={this.props.title}>{this.props.amount}</p>
         </div>
       </div>
     )
   }
 }
-//github is giving me difficulties so here is a comment
 class App extends Component {
   constructor(props) {
     super(props);
@@ -38,6 +37,7 @@ class App extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    var change = [this.state];
     var paid = this.state.paid;
     var due = this.state.due;
     var difference = ((paid - due)*100).toFixed(2);
@@ -48,6 +48,7 @@ class App extends Component {
     let quarters = Math.floor(difference%100/25);
     let dimes = Math.floor(difference%25/10);
     let nickels = Math.floor((difference-(twenties*2000)-(tens*1000)-(fives*500)-(ones*100)-(quarters*25)-(dimes*10))/5);
+     console.log(change);
 
     this.setState({
       change: (paid-due).toFixed(2),
@@ -112,7 +113,7 @@ class App extends Component {
               <h4 className='alert-heading'>{(this.state.message)}${(this.state.change)}</h4>
             </div>
             <div style={{display:'flex', flexFlow:'row wrap', justifyContent:'space-around', alignContent:'space-around', height:'100%'}}>
-              <ChangeCard name='Twenties' title='twenties' amount={this.state.twenties}/>
+              <ChangeCard name='Twenties' title='Twenties' amount={this.state.twenties}/>
               <ChangeCard name='Tens' title='Tens ' amount={this.state.tens}/>
               <ChangeCard name='Fives' title='Fives ' amount={this.state.fives}/>
               <ChangeCard name='Ones' title='Ones' amount={this.state.ones}/>
