@@ -17,17 +17,17 @@ class App extends Component {
     super(props);
     this.state = {
       twenties: '',
-      tens: "",
-      fives: "",
-      ones: "",
-      quarters: "",
-      dimes: "",
-      nickels: "",
-      pennies: "",
-      message: "",
-      change: "",
-      paid: "",
-      due: "",
+      tens: '',
+      fives: '',
+      ones: '',
+      quarters: '',
+      dimes: '',
+      nickels: '',
+      pennies: '',
+      message: '',
+      change: '',
+      paid: '',
+      due: '',
       alert: ''
     }
     this.handleDue = this.handleDue.bind(this);
